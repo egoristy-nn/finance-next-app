@@ -1,7 +1,5 @@
 .content {
-    outline: 1px solid green;
     overflow-y: auto;
-    height: calc(100vh - 64px);
+    height: calc(100vh - 100px);
     text-align: center;
-    padding-top: 32px
 }

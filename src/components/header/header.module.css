@@ -1,4 +1,6 @@
 .header {
-    outline: 1px solid blue;
-    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    height: 100px;
 }

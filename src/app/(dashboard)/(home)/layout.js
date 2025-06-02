@@ -20,10 +20,10 @@ export default function DashboardLayout({ children }) {
     <html lang="en">
       <body style={{ fontFamily: roboto.style.fontFamily, height: "100vh"}}>
         <Grid container>
-          <Grid size={2}>
+          <Grid size={1}>
             <Sider />
           </Grid>
-          <Grid size={10}>
+          <Grid size={11}>
             <Header />
             <Content children={children}/>
           </Grid>

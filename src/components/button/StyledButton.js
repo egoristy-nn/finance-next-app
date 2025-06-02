@@ -7,7 +7,7 @@ const ColorButton = styled(Button)(() => ({
   border: `1px solid ${green[500]}`, // Зеленая граница вокруг кнопки
   transition: 'all 0.3s ease-in-out', // Плавная анимация перехода состояний
   fontWeight: 'bold',
-  borderRadius: 10,
+  borderRadius: 30,
   height: 50,
   '&:hover': {
     backgroundColor: green[700], // Фон становится темно-зеленым при наведении
