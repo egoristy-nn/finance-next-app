@@ -4,6 +4,7 @@ import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Tooltip from '@mui/material/Tooltip';
+import styles from "./drawer.module.css";
 
 
 export default function CustomDrawer() {
@@ -23,7 +24,7 @@ export default function CustomDrawer() {
     <div>
       <Tooltip title="Show notifications">
                 <IconButton onClick={toggleDrawer(true)} aria-label="notifications" style={{width: "45px", height: "45px", border: "1px solid #2e2e2e"}}>
-                    <NotificationsIcon style={{ width: "25px", height: "25px", color: "white" }}/>
+                    <NotificationsIcon className={styles.icon} style={{ width: "25px", height: "25px", transition: "all 0.2s ease-in-out"}}/>
                 </IconButton>
         </Tooltip>
       <Drawer open={open} onClose={toggleDrawer(false)} anchor='right'>

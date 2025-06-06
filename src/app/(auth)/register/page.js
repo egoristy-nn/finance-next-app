@@ -62,7 +62,7 @@ export default function Register() {
             setLoading(true);
             setTimeout(() => {
                 setLoading(false);
-                window.location.href = "/login";
+                window.location.href = "/";
             }, 2000);
         }
     };

@@ -3,7 +3,6 @@ import React from "react";
 import styles from "./header.module.css";
 import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
 import StyledMainInput from "../input/StyledMainInput";
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import CustomDrawer from "../drawer/CustomDrawer";
 
 const settings = ['Profile','Logout'];
@@ -31,7 +30,7 @@ const Header = () => {
                 <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar style={{ width: "45px", height: "45px" }}/>
+                    <Avatar className={styles.avatar} style={{ width: "45px", height: "45px", transition: "all 0.2s ease-in-out"}}/>
                 </IconButton>
                 </Tooltip>
                 <Menu

@@ -59,7 +59,7 @@ export default function Auth() {
     return (
             <html lang="en">
                 <body>
-                    <Card style={{backgroundColor: "#1a1a1a", color: "#fff", borderRadius: 15}} sx={{ width: 350 }}>
+                    <Card style={{backgroundColor: "var(--foreground)", color: "var(--font-color)", borderRadius: 15}} sx={{ width: 350 }}>
                         <CardContent style={{display: "flex", gap: 20, flexDirection: "column", alignItems: "center"}}>
                             <div style={{display: "flex", gap: 20, flexDirection: "column", alignItems: "center"}}>
                                 <Typography variant="h4" style={{fontSize: 32}}>Авторизация</Typography>
