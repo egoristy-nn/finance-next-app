@@ -2,21 +2,21 @@ import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 
 const CssTextField = styled(TextField)(({ theme }) => ({
-  '& label': {
-    color: '#D0DCE0', // Светлый цвет неактивного лейбла
-  },
-  '& label.Mui-focused': {
-    color: '#A0AAB4', // Цвет активного лейбла
-  },
   '& input': {
-    color: '#D0DCE0', // Светлый цвет вводимого текста
-    fontWeight: 'bold'
+    color: '#fff', // Светлый цвет вводимого текста
+    fontWeight: '100',
+    marginLeft: 10
+  },
+  '& input::placeholder': {
+    color: '#fff',
+    opacity: 0.6,
+    fontWeight: '100' // Общий селектор для всех современных браузеров
   },
   '& .MuiInput-underline:after': {
     borderBottomColor: '#B2BAC2', // Подчеркивание при фокусировке
   },
   '& .MuiOutlinedInput-root': {
-    borderRadius: 30, // Скругление углов границы
+    borderRadius: 30,
     '& fieldset': {
       borderColor: '#303030', // Обычная граница
     },
@@ -29,6 +29,6 @@ const CssTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-export default function StyledInput(props) {
+export default function StyledMainInput(props) {
   return <CssTextField {...props} />;
 }

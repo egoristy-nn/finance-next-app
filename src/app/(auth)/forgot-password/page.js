@@ -12,7 +12,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 const validateEmail = (email) =>
   !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-export default function Auth() {
+export default function ForgotPassword() {
     const [errors, setErrors] = useState({});
     const [values, setValues] = useState({ email: '', password: '' });
     const [loading, setLoading] = useState(false);
@@ -41,17 +41,13 @@ export default function Auth() {
             newErrors.email = 'Некорректный email';
         }
         
-        if (!values.password) {
-            newErrors.password = 'Необходимо ввести пароль';
-        }
-        
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
         } else {
             setLoading(true);
             setTimeout(() => {
                 setLoading(false);
-                window.location.href = "/";
+                window.location.href = "/login";
             }, 2000);
         }
     };
@@ -59,26 +55,21 @@ export default function Auth() {
     return (
             <html lang="en">
                 <body>
-                    <Card style={{backgroundColor: "var(--foreground)", color: "var(--font-color)", borderRadius: 15}} sx={{ width: 350 }}>
+                    <Card style={{backgroundColor: "#1a1a1a", color: "#fff", borderRadius: 15}} sx={{ width: 350 }}>
                         <CardContent style={{display: "flex", gap: 20, flexDirection: "column", alignItems: "center"}}>
-                            <div style={{display: "flex", gap: 20, flexDirection: "column", alignItems: "center"}}>
-                                <Typography variant="h4" style={{fontSize: 32}}>Авторизация</Typography>
-                                <Divider style={{width: "100%", backgroundColor: "#303030"}}/>
-                                <Typography variant="h6" style={{fontSize: 16}}>Введите данные</Typography>
+                            <div style={{display: "flex", gap: 20, flexDirection: "column", alignItems: "center", textAlign: "center"}}>
+                                <Typography variant="h4" style={{fontSize: 32}}>Восстановление пароля</Typography>
+                                <Divider style={{width: "70%", backgroundColor: "#303030"}}/>
+                                <Typography variant="h6" style={{fontSize: 16}}>Укажите email, на нее придет новый пароль</Typography>
                             </div>
                             <form onSubmit={handleSubmit} style={{display: "flex", gap: 20, flexDirection: "column", alignItems: "center", width: "100%"}}>
                                 <StyledInput type="email" label="Email" variant="outlined" style={{width: "100%"}} name="email" value={values.email} onChange={handleChange} required error={errors.email} helperText={errors.email}/>
-                                <StyledInput label="Пароль" variant="outlined" type="password" style={{width: "100%"}} name="password" value={values.password} onChange={handleChange} required error={errors.password} helperText={errors.password}/>
-                                <StyledButton variant="outlined" style={{width: "100%"}} type="submit">{loading ? <CircularProgress size={24} color="inherit" /> : "Войти"}</StyledButton>
+                                <StyledButton variant="outlined" style={{width: "100%"}} type="submit">{loading ? <CircularProgress size={24} color="inherit" /> : "Отправить"}</StyledButton>
                             </form>
-                            <div style={{display: "flex", gap: 10, flexDirection: "row", alignItems: "center"}}>
-                                <FormControlLabel control={<Checkbox defaultChecked color="success"/>} label="Запомнить меня" />
-                                <Typography className={styles.link} variant="h7"><Link href="/forgot-password">Забыли пароль?</Link></Typography>
-                            </div>
                             <Divider style={{width: "100%", backgroundColor: "#303030"}}/>
                             <div style={{display: "flex", gap: 10, flexDirection: "row", alignItems: "center"}}>
-                                <Typography variant="h6" style={{fontSize: 16}}>Нет аккаунта?</Typography>
-                                <Typography className={styles.link} variant="h7"><Link href="/register">Зарегистрироваться</Link></Typography>
+                                <Typography variant="h6" style={{fontSize: 16}}>Уже есть аккаунт?</Typography>
+                                <Typography className={styles.link} variant="h7"><Link href="/login">Войти</Link></Typography>
                             </div>
                         </CardContent>
                     </Card>
