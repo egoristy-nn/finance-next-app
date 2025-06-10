@@ -6,11 +6,13 @@ import StyledButton from "@/components/button/StyledButton";
 import Link from "next/link";
 import { useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
+import { useRouter } from 'next/navigation';
 
 const validateEmail = (email) =>
   !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 export default function Register() {
+    const router = useRouter();
     const [errors, setErrors] = useState({});
     const [values, setValues] = useState({name: '', email: '', password: '', confirmPassword: '' });
     const [loading, setLoading] = useState(false);
@@ -62,7 +64,7 @@ export default function Register() {
             setLoading(true);
             setTimeout(() => {
                 setLoading(false);
-                window.location.href = "/";
+                router.push('/');
             }, 2000);
         }
     };

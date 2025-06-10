@@ -15,8 +15,10 @@ const Header = () => {
   };
 
   const handleCloseUserMenu = (e) => {
-    const setting = e.target.textContent.trim('Logout')
-    if(setting === 'Logout') {
+    const setting = e.target.textContent
+    if(setting === 'Profile') {
+        window.location.href = "/profile"
+    } else if(setting === 'Logout') {
         window.location.href = "/login"
     }
     setAnchorElUser(null);

@@ -8,11 +8,14 @@ import Checkbox from "@mui/material/Checkbox";
 import Link from "next/link";
 import { useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
+import { useRouter } from 'next/navigation';
 
 const validateEmail = (email) =>
   !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-export default function Auth() {
+export default function Login() {
+
+    const router = useRouter();
     const [errors, setErrors] = useState({});
     const [values, setValues] = useState({ email: '', password: '' });
     const [loading, setLoading] = useState(false);
@@ -31,9 +34,23 @@ export default function Auth() {
         }
     };
 
-    const handleSubmit = event => {
+    async function handleSubmit (event) {
         event.preventDefault();
         let newErrors = {};
+
+        const formData = new FormData(event.currentTarget);
+        const email = formData.get('email');
+        const password = formData.get('password');
+
+        const response = fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+        });
+
+        
         
         if (!values.email) {
             newErrors.email = 'Необходимо ввести Email';
@@ -51,7 +68,7 @@ export default function Auth() {
             setLoading(true);
             setTimeout(() => {
                 setLoading(false);
-                window.location.href = "/";
+                router.push('/');
             }, 2000);
         }
     };

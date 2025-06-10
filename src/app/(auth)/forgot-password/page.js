@@ -8,11 +8,13 @@ import Checkbox from "@mui/material/Checkbox";
 import Link from "next/link";
 import { useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
+import { useRouter } from 'next/navigation';
 
 const validateEmail = (email) =>
   !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 export default function ForgotPassword() {
+    const router = useRouter();
     const [errors, setErrors] = useState({});
     const [values, setValues] = useState({ email: '', password: '' });
     const [loading, setLoading] = useState(false);
@@ -47,7 +49,7 @@ export default function ForgotPassword() {
             setLoading(true);
             setTimeout(() => {
                 setLoading(false);
-                window.location.href = "/login";
+                router.push('/login');
             }, 2000);
         }
     };

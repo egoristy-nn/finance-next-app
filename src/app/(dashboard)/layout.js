@@ -1,5 +1,5 @@
 import { Roboto } from "next/font/google";
-import "../../globals.css";
+import "../globals.css";
 import Header from "@/components/header/header";
 import Sider from "@/components/sider/sider";
 import Content from "@/components/content/content";
@@ -11,8 +11,8 @@ const roboto = Roboto({
 });
 
 export const metadata = {
-  title: "Finance",
-  description: "Finance App For Personal Use",
+  title: "Finance App",
+  description: "Finance App For Personal Use"
 };
 
 export default function DashboardLayout({ children }) {

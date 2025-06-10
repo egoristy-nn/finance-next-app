@@ -1,5 +1,5 @@
-import styles from "../../page.module.css";
-export default function Transactions() {
+import styles from "@/app/page.module.css";
+export default function History() {
   return (
     <h1 className={styles.page}>History</h1>
   );
