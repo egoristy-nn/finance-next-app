@@ -9,13 +9,14 @@ import Link from "next/link";
 import { useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 import { useRouter } from 'next/navigation';
+import { useAuth } from "@/app/global-state/auth-provider";
 
 const validateEmail = (email) =>
   !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 export default function Login() {
-
     const router = useRouter();
+    const { setIsAuthenticated } = useAuth();
     const [errors, setErrors] = useState({});
     const [values, setValues] = useState({ email: '', password: '' });
     const [loading, setLoading] = useState(false);
@@ -36,40 +37,34 @@ export default function Login() {
 
     async function handleSubmit (event) {
         event.preventDefault();
-        let newErrors = {};
+        setLoading(true);
 
         const formData = new FormData(event.currentTarget);
         const email = formData.get('email');
         const password = formData.get('password');
 
-        const response = fetch('/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        });
+        try {
+            const response = fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
 
-        
-        
-        if (!values.email) {
-            newErrors.email = 'Необходимо ввести Email';
-        } else if (!validateEmail(values.email)) {
-            newErrors.email = 'Некорректный email';
-        }
-        
-        if (!values.password) {
-            newErrors.password = 'Необходимо ввести пароль';
-        }
-        
-        if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors);
-        } else {
-            setLoading(true);
-            setTimeout(() => {
-                setLoading(false);
+            if (response.ok) {
+                const result = await response.json();
+                const token = result.token;
+                window.localStorage.setItem('access_token', token);
+                setIsAuthenticated(true);
                 router.push('/');
-            }, 2000);
+            } else {
+                throw new Error('Неверные учетные данные');
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
         }
     };
 
