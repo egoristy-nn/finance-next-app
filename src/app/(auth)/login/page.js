@@ -6,67 +6,64 @@ import StyledButton from "@/components/button/StyledButton";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "next/link";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 import { useRouter } from 'next/navigation';
-import { useAuth } from "@/app/global-state/auth-provider";
-
-const validateEmail = (email) =>
-  !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+import { useDispatch, useSelector } from "@/app/store";
+import { userLogin } from "@/reducers/userReducer";
 
 export default function Login() {
     const router = useRouter();
-    const { setIsAuthenticated } = useAuth();
     const [errors, setErrors] = useState({});
     const [values, setValues] = useState({ email: '', password: '' });
-    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const isAuthenticated = useSelector(state => state.user.isAuthenticated);
+    const isLoading = useSelector(state => state.user.isLoading);
     
     const handleChange = e => {
         const { name, value } = e.target;
         setValues(prev => ({...prev, [name]: value}));
-        
+
         if (name === 'email') {
-            if (!validateEmail(value)) {
-                setErrors(prev => ({...prev, email: 'Некорректный email'}));
-            } else {
-                delete errors.email;
-                setErrors({...errors});
+            if (!value) {
+                setErrors(prev => ({...prev, email: ''}));
+                
             }
         }
+
+        if (name === 'password') {
+            if (!value) {
+                setErrors(prev => ({...prev, password: ''}));
+            }
+        }
+
     };
 
     async function handleSubmit (event) {
         event.preventDefault();
-        setLoading(true);
-
-        const formData = new FormData(event.currentTarget);
-        const email = formData.get('email');
-        const password = formData.get('password');
 
         try {
-            const response = fetch('/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
+            const formData = new FormData(event.currentTarget);
+            const username = formData.get('email');
+            const password = formData.get('password');
+            const result = await dispatch(userLogin({username, password}));
 
-            if (response.ok) {
-                const result = await response.json();
-                const token = result.token;
-                window.localStorage.setItem('access_token', token);
-                setIsAuthenticated(true);
-                router.push('/');
-            } else {
-                throw new Error('Неверные учетные данные');
+            if (result.meta.requestStatus === 'rejected') {
+                setErrors(prev => ({...prev, email: 'Неверные данные', password: 'Неверные данные'}));
             }
+            
         } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
+            throw new Error(error);
         }
-    };
+
+        
+    }
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            router.push('/');
+        }
+    }, [isAuthenticated]);
 
     return (
             <html lang="en">
@@ -79,9 +76,9 @@ export default function Login() {
                                 <Typography variant="h6" style={{fontSize: 16}}>Введите данные</Typography>
                             </div>
                             <form onSubmit={handleSubmit} style={{display: "flex", gap: 20, flexDirection: "column", alignItems: "center", width: "100%"}}>
-                                <StyledInput type="email" label="Email" variant="outlined" style={{width: "100%"}} name="email" value={values.email} onChange={handleChange} required error={errors.email} helperText={errors.email}/>
-                                <StyledInput label="Пароль" variant="outlined" type="password" style={{width: "100%"}} name="password" value={values.password} onChange={handleChange} required error={errors.password} helperText={errors.password}/>
-                                <StyledButton variant="outlined" style={{width: "100%"}} type="submit">{loading ? <CircularProgress size={24} color="inherit" /> : "Войти"}</StyledButton>
+                                <StyledInput label="Имя пользователя" variant="outlined" style={{width: "100%"}} name="email" value={values.email} onChange={handleChange} error={errors.email} helperText={errors.email} />
+                                <StyledInput label="Пароль" variant="outlined" type="password" style={{width: "100%"}} name="password" value={values.password} onChange={handleChange} error={errors.password} helperText={errors.password} />
+                                <StyledButton variant="outlined" style={{width: "100%"}} type="submit">{isLoading ? <CircularProgress size={24} color="inherit" /> : "Войти"}</StyledButton>
                             </form>
                             <div style={{display: "flex", gap: 10, flexDirection: "row", alignItems: "center"}}>
                                 <FormControlLabel control={<Checkbox defaultChecked color="success"/>} label="Запомнить меня" />

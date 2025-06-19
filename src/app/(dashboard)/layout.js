@@ -6,9 +6,11 @@ import Header from "@/components/header/header";
 import Sider from "@/components/sider/sider";
 import Content from "@/components/content/content";
 import { Grid } from "@mui/material";
-import AuthProvider from "../global-state/auth-provider";
-import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
+import { Provider } from "react-redux";
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from "@/app/store";
+
 
 const roboto = Roboto({
   weight: "400",
@@ -21,13 +23,6 @@ const metadata = {
 };
 
 export default function DashboardLayout({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!isAuthenticated) router.push("/login");
-  }, [router, isAuthenticated]);
-  
   return (
     <html lang="en">
       <head>
@@ -35,7 +30,8 @@ export default function DashboardLayout({ children }) {
         <meta name="description" content={metadata.description} />
       </head>
       <body style={{ fontFamily: roboto.style.fontFamily, height: "100vh"}}>
-        <AuthProvider isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}>
+        <Provider store = {store}>
+          <PersistGate loading={null} persistor={persistor}>
           <Grid container>
             <Grid size={1}>
               <Sider />
@@ -45,7 +41,8 @@ export default function DashboardLayout({ children }) {
               <Content children={children}/>
             </Grid>
           </Grid>
-        </AuthProvider>
+          </PersistGate>
+        </Provider>
       </body>
     </html>
   );

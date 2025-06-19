@@ -4,11 +4,16 @@ import styles from "./header.module.css";
 import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
 import StyledMainInput from "../input/StyledMainInput";
 import CustomDrawer from "../drawer/CustomDrawer";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "@/app/store";
+import { userLogout } from "@/reducers/userReducer";
 
 const settings = ['Profile','Logout'];
 
 const Header = () => {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const router = useRouter();
+    const dispatch = useDispatch();
 
     const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -17,9 +22,9 @@ const Header = () => {
   const handleCloseUserMenu = (e) => {
     const setting = e.target.textContent
     if(setting === 'Profile') {
-        window.location.href = "/profile"
+        router.push("/profile")
     } else if(setting === 'Logout') {
-        window.location.href = "/login"
+        dispatch(userLogout());
     }
     setAnchorElUser(null);
   };
