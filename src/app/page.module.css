@@ -1,6 +1,32 @@
-.page {
-    font-weight: 600;
+.container {
+    font-weight: 400;
     font-size: 32px;
     text-align: center;
-    margin-top: 32px
+    margin: 64px 80px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 50px;
+}
+
+.card {
+    height: 35vh;
+    border-radius: 30px;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--foreground);
+}
+
+.card_graph {
+    border-radius: 30px;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--foreground);
+    grid-row: span 2 / auto;
 }
