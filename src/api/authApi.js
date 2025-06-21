@@ -7,7 +7,7 @@ export function loginUser(username, password, rememberMe) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ username, password, rememberMe }),
-    сredentials: 'include',
+    credentials: 'include',
   });
 }
 
@@ -17,6 +17,6 @@ export function logoutUser () {
         headers: {
             'Content-Type': 'application/json',
         },
-        сredentials: 'include',
+        credentials: 'include',
     })
 }
