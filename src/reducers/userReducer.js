@@ -4,7 +4,7 @@ import { loginUser, logoutUser } from "../api/authApi";
 export const userLogin = createAsyncThunk(
   'user/loginUser',
   async (data) => {
-    const response = await loginUser(data.username, data.password);
+    const response = await loginUser(data.username, data.password, data.rememberMe);
     if (response.status === 200) {
       return response.data;
     } else {

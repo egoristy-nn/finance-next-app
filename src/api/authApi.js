@@ -1,12 +1,12 @@
 const URL = 'http://localhost:8484';
 
-export function loginUser(username, password) {
+export function loginUser(username, password, rememberMe) {
   return fetch(`${URL}/api/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ username, password, rememberMe }),
     сredentials: 'include',
   });
 }

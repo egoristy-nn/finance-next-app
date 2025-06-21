@@ -6,7 +6,7 @@ import StyledButton from "@/components/button/StyledButton";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "next/link";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from "@/app/store";
@@ -19,6 +19,7 @@ export default function Login() {
     const dispatch = useDispatch();
     const isAuthenticated = useSelector(state => state.user.isAuthenticated);
     const isLoading = useSelector(state => state.user.isLoading);
+    const [checked, setChecked] = useState(true);
     
     const handleChange = e => {
         const { name, value } = e.target;
@@ -46,7 +47,7 @@ export default function Login() {
             const formData = new FormData(event.currentTarget);
             const username = formData.get('email');
             const password = formData.get('password');
-            const result = await dispatch(userLogin({username, password}));
+            const result = await dispatch(userLogin({username, password, rememberMe: checked}));
 
             if (result.meta.requestStatus === 'rejected') {
                 setErrors(prev => ({...prev, email: 'Неверные данные', password: 'Неверные данные'}));
@@ -81,7 +82,7 @@ export default function Login() {
                                 <StyledButton variant="outlined" style={{width: "100%"}} type="submit">{isLoading ? <CircularProgress size={24} color="inherit" /> : "Войти"}</StyledButton>
                             </form>
                             <div style={{display: "flex", gap: 10, flexDirection: "row", alignItems: "center"}}>
-                                <FormControlLabel control={<Checkbox defaultChecked color="success"/>} label="Запомнить меня" />
+                                <FormControlLabel control={<Checkbox checked={checked} onChange={(e) => setChecked(e.target.checked)} color="success"/>} label="Запомнить меня" />
                                 <Typography className={styles.link} variant="h7"><Link href="/forgot-password">Забыли пароль?</Link></Typography>
                             </div>
                             <Divider style={{width: "100%", backgroundColor: "#303030"}}/>

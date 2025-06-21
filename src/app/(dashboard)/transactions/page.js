@@ -5,14 +5,6 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
 export default function Transactions() {
-  const router = useRouter();
-  const isAuthenticated = useSelector(state => state.user.isAuthenticated);
-
-  useEffect(() => {
-    if (!(isAuthenticated)) {
-      router.push('/login');
-    }
-  }, [isAuthenticated]);
 
   return (
     <h1 className={styles.page}>Transactions</h1>
