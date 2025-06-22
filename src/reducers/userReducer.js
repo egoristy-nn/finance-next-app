@@ -1,5 +1,5 @@
 import { createAsyncThunk , createSlice} from "@reduxjs/toolkit";
-import { loginUser, logoutUser } from "../api/authApi";
+import { loginUser, logoutUser, signUpUser } from "../api/authApi";
 
 export const userLogin = createAsyncThunk(
   'user/loginUser',
@@ -25,8 +25,19 @@ export const userLogout = createAsyncThunk(
   }
 );
 
+export const userSignUp = createAsyncThunk(
+  'user/signUpUser',
+  async (data) => {
+    const response = await signUpUser(data.username, data.password, data.confirmPassword, data.email);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(response.headers.get('error'));
+    }
+  }
+);
+
 const initialState = {
-  username: '',
   loginUserRequest: false,
   loginUserError: null,
   isAuthenticated: false,
@@ -48,7 +59,6 @@ const userSlice = createSlice({
         state.isAuthenticated = true;
         state.loginUserRequest = false;
         state.loginUserError = null;
-        state.data = action.payload;
         state.isAuthChecked = true;
         state.isLoading = false
       })
@@ -75,6 +85,26 @@ const userSlice = createSlice({
         state.isAuthenticated = false;
         state.loginUserRequest = false;
         state.loginUserError = action.error.message || 'Logout failed.';
+      });
+
+      builder
+      .addCase(userSignUp.pending, (state) => {
+        state.loginUserRequest = true;
+        state.loginUserError = null;
+        state.isLoading = true
+      })
+      .addCase(userSignUp.fulfilled, (state) => {
+        state.isAuthenticated = true;
+        state.loginUserRequest = false;
+        state.loginUserError = null;
+        state.isAuthChecked = true;
+        state.isLoading = false
+      })
+      .addCase(userSignUp.rejected, (state, action) => {
+        state.isAuthenticated = false;
+        state.loginUserRequest = false;
+        state.loginUserError = action.error.message || 'Registration failed.';
+        state.isLoading = false
       });
   },
 

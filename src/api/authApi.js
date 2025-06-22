@@ -20,3 +20,14 @@ export function logoutUser () {
         credentials: 'include',
     })
 }
+
+export function signUpUser (username, password, confirmPassword, email) {
+    return fetch(`${URL}/api/auth/signup`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password, confirmPassword, email }),
+        credentials: 'include',
+    })
+}
