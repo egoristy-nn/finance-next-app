@@ -1,6 +1,6 @@
 "use client";
 import { Card, CardContent, Typography, Divider } from "@mui/material";
-import styles from "./page.module.css"
+import styles from "../page.module.css"
 import StyledInput from "@/components/input/StyledInput";
 import StyledButton from "@/components/button/StyledButton";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -28,7 +28,6 @@ export default function Login() {
         if (name === 'email') {
             if (!value) {
                 setErrors(prev => ({...prev, email: ''}));
-                
             }
         }
 
@@ -67,8 +66,6 @@ export default function Login() {
     }, [isAuthenticated]);
 
     return (
-            <html lang="en">
-                <body>
                     <Card style={{backgroundColor: "var(--foreground)", color: "var(--font-color)", borderRadius: 15}} sx={{ width: 350 }}>
                         <CardContent style={{display: "flex", gap: 20, flexDirection: "column", alignItems: "center"}}>
                             <div style={{display: "flex", gap: 20, flexDirection: "column", alignItems: "center"}}>
@@ -83,16 +80,14 @@ export default function Login() {
                             </form>
                             <div style={{display: "flex", gap: 10, flexDirection: "row", alignItems: "center"}}>
                                 <FormControlLabel control={<Checkbox checked={checked} onChange={(e) => setChecked(e.target.checked)} color="success"/>} label="Запомнить меня" />
-                                <Typography className={styles.link} variant="h7"><Link href="/forgot-password">Забыли пароль?</Link></Typography>
+                                <Typography className={styles.link} variant="h7"><Link  href="/forgot-password">Забыли пароль?</Link></Typography>
                             </div>
                             <Divider style={{width: "100%", backgroundColor: "#303030"}}/>
                             <div style={{display: "flex", gap: 10, flexDirection: "row", alignItems: "center"}}>
                                 <Typography variant="h6" style={{fontSize: 16}}>Нет аккаунта?</Typography>
-                                <Typography className={styles.link} variant="h7"><Link href="/register">Зарегистрироваться</Link></Typography>
+                                <Typography className={styles.link} variant="h7"><Link href="/sign-up">Зарегистрироваться</Link></Typography>
                             </div>
                         </CardContent>
                     </Card>
-                </body>
-            </html>
     );
 }

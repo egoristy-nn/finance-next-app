@@ -1,10 +1,8 @@
 "use client";
 import { Card, CardContent, Typography, Divider } from "@mui/material";
-import styles from "./page.module.css"
+import styles from "../page.module.css"
 import StyledInput from "@/components/input/StyledInput";
 import StyledButton from "@/components/button/StyledButton";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "next/link";
 import { useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
@@ -55,8 +53,6 @@ export default function ForgotPassword() {
     };
 
     return (
-            <html lang="en">
-                <body>
                     <Card style={{backgroundColor: "#1a1a1a", color: "#fff", borderRadius: 15}} sx={{ width: 350 }}>
                         <CardContent style={{display: "flex", gap: 20, flexDirection: "column", alignItems: "center"}}>
                             <div style={{display: "flex", gap: 20, flexDirection: "column", alignItems: "center", textAlign: "center"}}>
@@ -75,7 +71,5 @@ export default function ForgotPassword() {
                             </div>
                         </CardContent>
                     </Card>
-                </body>
-            </html>
     );
 }
