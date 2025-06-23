@@ -20,7 +20,7 @@ const Sider = () => {
         setHomeIsActive(pathname === "/");
         setHistoryIsActive(pathname === "/history");
         setTransactionsIsActive(pathname === "/transactions");
-    })
+    }, [pathname]);
 
     return (
         <div className={styles.sider}>

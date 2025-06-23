@@ -74,7 +74,7 @@ export default function SignUp() {
         if (isAuthenticated) {
             router.push('/');
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated, router]);
 
     return (
                     <Card style={{backgroundColor: "#1a1a1a", color: "#fff", borderRadius: 15}} sx={{ width: 350 }}>

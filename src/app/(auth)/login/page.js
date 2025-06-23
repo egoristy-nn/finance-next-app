@@ -63,7 +63,7 @@ export default function Login() {
         if (isAuthenticated) {
             router.push('/');
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated, router]);
 
     return (
                     <Card style={{backgroundColor: "var(--foreground)", color: "var(--font-color)", borderRadius: 15}} sx={{ width: 350 }}>
