@@ -41,7 +41,7 @@ export default function DashboardLayout({ children }) {
                 </Grid>
                 <Grid size={11}>
                   <Header />
-                  <Content children={children}/>
+                  <Content>{children}</Content>
                 </Grid>
               </Grid>
             </AuthCheck>
